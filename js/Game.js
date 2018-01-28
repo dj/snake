@@ -11,7 +11,7 @@ export default class Game {
 		this.colors = {
 			bg: '#222',
 			grid: '#eee',
-			snake: '#f00'
+			snake: '#090'
 		}
 		this.direction = 'right'
 		this.snake = [
@@ -22,7 +22,6 @@ export default class Game {
 			[0, 4],
 		]
 		window.addEventListener('keydown', (e) => {
-			console.log(e.keyCode)
 			this.lastKeyCode = e.keyCode
 		})
 	}
@@ -71,19 +70,36 @@ export default class Game {
 
 	moveForward() {
 		const lastHead = this.snake[0]
-		let head = []
+		let head, x, y
 		switch (this.direction) {
 			case 'up':
-				head = [lastHead[0], lastHead[1] - 1]
+				x = lastHead[0]
+				y = lastHead[1] - 1
+				if (y === -1) {
+					y = this.rows - 1
+				}
+				head = [x, y]
 				break
 			case 'right':
-				head = [lastHead[0] + 1, lastHead[1]]
+				x = (lastHead[0] + 1) % this.cols
+				y = lastHead[1]
+				head = [x, y]
 				break
 			case 'down':
-				head = [lastHead[0], lastHead[1] + 1]
+				x = lastHead[0]
+				y = lastHead[1] + 1
+				if (y == this.rows) {
+					y = 0
+				}
+				head = [x, y]
 				break
 			case 'left':
-				head = [lastHead[0] - 1, lastHead[1]]
+				x = lastHead[0] - 1
+				if (x === -1) {
+					x = this.cols - 1
+				}
+				y = lastHead[1]
+				head = [x, y]
 				break
 			default:
 				throw 'Unexpected direction'
@@ -111,7 +127,6 @@ export default class Game {
 		let seen = {}
 		for (let point of snake) {
 			let xy = `${point[0]},${point[1]}`
-			console.log(xy)
 			if (seen[xy]) {
 				return true
 			} else {
