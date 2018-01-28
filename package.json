@@ -1,5 +1,9 @@
 {
+  "scripts": {
+    "start": "parcel"
+  },
   "dependencies": {
-    "mainloop.js": "^1.0.4"
+    "mainloop.js": "^1.0.4",
+    "parcel-bundler": "^1.5.1"
   }
 }
